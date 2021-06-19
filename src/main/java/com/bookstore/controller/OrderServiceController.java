@@ -29,6 +29,7 @@ public class OrderServiceController {
 	@Autowired
 	private IOrderSService orderService;
 	
+	//Return all order data present
 	@GetMapping("/getallorders")
 	public ResponseEntity<List<?>> getAllOrders(@RequestHeader String userToken) {
 		log.info("Get All Orders");
@@ -36,6 +37,7 @@ public class OrderServiceController {
 		return new ResponseEntity<List<?>>(response, HttpStatus.OK);
 	}
 	
+	//Returns all order data of an user
 	@GetMapping("/getallordersforuser")
 	public ResponseEntity<List<?>> getAllOrdersForUser(@RequestHeader String userToken) {
 		log.info("Get All Orders For User");
@@ -43,6 +45,7 @@ public class OrderServiceController {
 		return new ResponseEntity<List<?>>(response, HttpStatus.OK);
 	}
 	
+	//Places a new order
 	@PostMapping("/placeorder")
 	public ResponseEntity<Response> placeOrder(@RequestHeader String userToken,
 											   @RequestHeader int bookId,
@@ -52,6 +55,7 @@ public class OrderServiceController {
 		return new ResponseEntity<Response>(response, HttpStatus.OK);
 	}
 	
+	//Cancels an existing order 
 	@DeleteMapping("/cancelorder")
 	public ResponseEntity<Response> cancelOrder(@RequestParam int orderId,
 											   	@RequestHeader String userToken) {

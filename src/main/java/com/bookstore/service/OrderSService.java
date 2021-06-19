@@ -79,6 +79,10 @@ public class OrderSService implements IOrderSService{
 				order.setUserId(userId);
 				order.setBookId(bookId);
 				orderRepository.save(order);
+				String uriB1 = "http://bookstore-controller/book/updatequantity/" + bookId +
+							   "?quantity=" + orderDTO.quantity + "&isBookAdded=" + true +
+							   "&token=" + userToken;
+				restTemplate.getForObject(uriB1, Response.class);
 				return new Response(200, "Added To Cart Successfully", order.getOrderId());
 			}else {
 				log.error("Book Doesnt Exist");
@@ -100,6 +104,10 @@ public class OrderSService implements IOrderSService{
 		if(isIdPresent && isPresent.isPresent()) {
 			log.info("Cancel Order");
 			orderRepository.delete(isPresent.get());
+			String uriB1 = "http://bookstore-controller/book/updatequantity/" + isPresent.get().getBookId() +
+					   "?quantity=" + isPresent.get().getQuantity() + "&isBookAdded=" + false +
+					   "&token=" + userToken;
+			restTemplate.getForObject(uriB1, Response.class);
 			return new Response(200, "Order Canceled Successfully", orderId);
 		}else {
 			log.error("User/CartId Is Not Present");
